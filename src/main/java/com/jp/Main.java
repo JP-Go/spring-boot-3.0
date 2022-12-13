@@ -4,20 +4,26 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
+@RequestMapping("api/v1/customers")
 public class Main {
+
+  private final CustomerRepository customerRepository;
+
+  public Main(CustomerRepository customerRepository) {
+    this.customerRepository = customerRepository;
+  }
+
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
   }
 
-  @GetMapping("/")
-  public Person greet() {
-    return new Person("Kyle", List.of("JavaScript", "Java", "Python"));
+  @GetMapping
+  public List<Customer> getCustomer() {
+    return customerRepository.findAll();
   }
-
-  private record Person(String name,
-                        List<String> favoriteProgrammingLanguages) {}
 }
