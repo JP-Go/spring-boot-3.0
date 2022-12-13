@@ -1,5 +1,6 @@
 package com.jp;
 
+import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,10 @@ public class Main {
   }
 
   @GetMapping("/")
-  public String test() {
-    return "Hello";
+  public Person greet() {
+    return new Person("Kyle", List.of("JavaScript", "Java", "Python"));
   }
+
+  private record Person(String name,
+                        List<String> favoriteProgrammingLanguages) {}
 }
